@@ -15,7 +15,7 @@ def run(command, utf=True, fail_ok=False, verbose=False):
     ) as process:
         outputs = process.communicate()
         if utf:
-            outputs = [o.decode("utf-8").strip() for o in outputs]
+            outputs = [o.decode("utf-8") for o in outputs]
         stdout, stderr = outputs
         if not fail_ok and process.returncode != 0:
             raise RuntimeError(f"Command {command} failed. stderr:\n{stderr}")
@@ -30,7 +30,6 @@ class Colors(object):
     YELLOW = "\033[93m"
     RED = "\033[91m"
     RESET = "\033[0m"
-
 
 
 def red(text):
