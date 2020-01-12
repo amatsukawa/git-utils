@@ -2,7 +2,14 @@ import os
 
 import shell
 
-CACHE_ROOT = os.environ.get("GIT_UTIL_ROOT", None)
+
+def _get_cache_root():
+    root = os.environ.get("GIT_UTIL_ROOT", None)
+    assert root, "No GIT_UTIL_ROOT environment variable."
+    return root
+
+
+CACHE_ROOT = _get_cache_root()
 
 
 def _get_git_root():

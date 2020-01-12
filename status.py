@@ -1,11 +1,14 @@
+#!/usr/bin/env python
+
+import argparse
 import os
 
 import shell
 import utils
 
 
-def _call_git_status():
-    stdout, *_ = shell.run(["git", "status", "--porcelain", "-b"])
+def _call_git_status(args):
+    stdout, *_ = shell.run(["git", "status", "--porcelain", "-b"] + args)
     paths = stdout.split("\n")[:-1]
     branch = paths[0][3:]  # starts with "## ".
     return branch, [(p[:2], p[3:]) for p in paths[1:]]
@@ -59,20 +62,20 @@ def _print_path(i, status, path):
 
 
 _MERGE_LEGEND = """
-D           D    unmerged, both deleted
-A           U    unmerged, added by us
-U           D    unmerged, deleted by them
-U           A    unmerged, added by them
-D           U    unmerged, deleted by us
-A           A    unmerged, both added
-U           U    unmerged, both modified
+\tDD unmerged, both deleted
+\tAU unmerged, added by us
+\tUD unmerged, deleted by them
+\tUA unmerged, added by them
+\tDU unmerged, deleted by us
+\tAA unmerged, both added
+\tUU unmerged, both modified
 """
 
 
 def _print_and_cache_status(index, tree, conflicts, untracked):
     i = 1
 
-    if (not index and not tree and not conflicts and not untracked):
+    if not index and not tree and not conflicts and not untracked:
         print("\nClean status.")
         return
 
@@ -101,18 +104,18 @@ def _print_and_cache_status(index, tree, conflicts, untracked):
 
         if conflicts:
             print("\nConflicts:")
-            print(_MERGE_LEGEND)
             for status, path in conflicts:
                 cache.write(f"{path}\n")
                 _print_path(i, status, path)
                 i += 1
-
+            print(_MERGE_LEGEND)
 
 
 def git_status():
-    CACHE_ROOT = os.environ.get("GIT_UTIL_ROOT", None)
-    os.makedirs(CACHE_ROOT, exist_ok=True)
-    branch, paths = _call_git_status()
+    parser = argparse.ArgumentParser()
+    args, unknown = parser.parse_known_args()
+    os.makedirs(utils.CACHE_ROOT, exist_ok=True)
+    branch, paths = _call_git_status(unknown)
     separated = _separate_paths(paths)
     print(f"On branch {branch}")
     _print_and_cache_status(*separated)

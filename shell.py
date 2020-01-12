@@ -9,7 +9,7 @@ import subprocess
 def run(command, utf=True, fail_ok=False, verbose=False):
     # https://janakiev.com/blog/python-shell-commands/
     if verbose:
-        logging.warning(f"Running: {command}")
+        logging.info(f"Running: {command}")
     with subprocess.Popen(
         command, stdout=subprocess.PIPE, stderr=subprocess.PIPE
     ) as process:
@@ -22,8 +22,8 @@ def run(command, utf=True, fail_ok=False, verbose=False):
         return stdout, stderr, process.returncode
 
 
-# https://stackoverflow.com/questions/22886353/printing-colors-in-python-terminal
 class Colors(object):
+    # https://stackoverflow.com/questions/22886353/printing-colors-in-python-terminal
     PINK = "\033[95m"
     BLUE = "\033[94m"
     GREEN = "\033[92m"
