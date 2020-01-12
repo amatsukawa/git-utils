@@ -5,8 +5,9 @@ import utils
 
 
 def _call_git_status():
-    stdout, *_ = shell.run(["git", "status", "--porcelain", "-z"])
-    paths = stdout.split("\0")[:-1]  # stdout ends with "\0"
+    stdout, *_ = shell.run(["git", "status", "--porcelain"])
+    paths = stdout.split("\n")[:-1]
+
     return [(p[:2], p[3:]) for p in paths]
 
 
