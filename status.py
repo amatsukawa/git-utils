@@ -5,10 +5,10 @@ import utils
 
 
 def _call_git_status():
-    stdout, *_ = shell.run(["git", "status", "--porcelain"])
+    stdout, *_ = shell.run(["git", "status", "--porcelain", "-b"])
     paths = stdout.split("\n")[:-1]
-
-    return [(p[:2], p[3:]) for p in paths]
+    branch = paths[0][3:]  # starts with "## ".
+    return branch, [(p[:2], p[3:]) for p in paths[1:]]
 
 
 def _separate_paths(paths):
@@ -112,8 +112,9 @@ def _print_and_cache_status(index, tree, conflicts, untracked):
 def git_status():
     CACHE_ROOT = os.environ.get("GIT_UTIL_ROOT", None)
     os.makedirs(CACHE_ROOT, exist_ok=True)
-    paths = _call_git_status()
+    branch, paths = _call_git_status()
     separated = _separate_paths(paths)
+    print(f"On branch {branch}")
     _print_and_cache_status(*separated)
     print()
 
