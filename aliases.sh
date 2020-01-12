@@ -1,4 +1,2 @@
-alias gs="./status.py"
-alias ga="git add"
-alias gc="git commit"
-alias gco="git checkout"
+alias gs="git_util_status"
+alias ga="git_util_add"

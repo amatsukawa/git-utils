@@ -1,15 +1,12 @@
-#!/usr/bin/env python
-
-import argparse
 import os
-from collections import namedtuple
+import sys
 
 import shell
 import utils
 
 
-def _call_git_status(args):
-    stdout, *_ = shell.run(["git", "status", "--porcelain", "-b"] + args)
+def _call_git_status():
+    stdout, *_ = shell.run(["git", "status", "--porcelain", "-b"] + sys.argv[1:])
     lines = stdout.split("\n")[:-1]
     branch = lines[0][3:]  # starts with "## ".
     return branch, [(p[:2], p[3:]) for p in lines[1:]]
@@ -94,7 +91,7 @@ def _print_and_cache_statuses(index, tree, conflicts, untracked):
         print("\nClean status.")
         return
 
-    with open(os.path.join(utils.CACHE_ROOT, "cache"), "w") as cache:
+    with open(utils.CACHE_PATH, "w") as cache:
         cache.write("##status\n")
         if index:
             print("\nChanges to be committed:")
@@ -117,10 +114,8 @@ def _print_and_cache_statuses(index, tree, conflicts, untracked):
 
 
 def git_status():
-    parser = argparse.ArgumentParser()
-    args, unknown = parser.parse_known_args()
-    os.makedirs(utils.CACHE_ROOT, exist_ok=True)
-    branch, paths = _call_git_status(unknown)
+    os.makedirs(os.path.dirname( utils.CACHE_PATH), exist_ok=True)
+    branch, paths = _call_git_status()
     separated = _separate_paths(paths)
     print(f"On branch {branch}")
     _print_and_cache_statuses(*separated)
