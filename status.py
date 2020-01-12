@@ -2,6 +2,7 @@
 
 import argparse
 import os
+from collections import namedtuple
 
 import shell
 import utils
@@ -9,9 +10,9 @@ import utils
 
 def _call_git_status(args):
     stdout, *_ = shell.run(["git", "status", "--porcelain", "-b"] + args)
-    paths = stdout.split("\n")[:-1]
-    branch = paths[0][3:]  # starts with "## ".
-    return branch, [(p[:2], p[3:]) for p in paths[1:]]
+    lines = stdout.split("\n")[:-1]
+    branch = lines[0][3:]  # starts with "## ".
+    return branch, [(p[:2], p[3:]) for p in lines[1:]]
 
 
 def _separate_paths(paths):
@@ -61,6 +62,12 @@ def _print_path(i, status, path):
         raise ValueError(f"Unknown status '{status}'.")
 
 
+def _write_cache(cache, status, path):
+    if status in ("R", "C"):
+        _, path = path.split(" -> ")
+    cache.write(f"{path}\n")
+
+
 _MERGE_LEGEND = """
 \tDD unmerged, both deleted
 \tAU unmerged, added by us
@@ -72,7 +79,15 @@ _MERGE_LEGEND = """
 """
 
 
-def _print_and_cache_status(index, tree, conflicts, untracked):
+def _print_and_cache_status(paths, i, cache):
+    for status, path in paths:
+        _print_path(i, status, path)
+        _write_cache(cache, status, path)
+        i += 1
+    return i
+
+
+def _print_and_cache_statuses(index, tree, conflicts, untracked):
     i = 1
 
     if not index and not tree and not conflicts and not untracked:
@@ -83,31 +98,21 @@ def _print_and_cache_status(index, tree, conflicts, untracked):
         cache.write("##status\n")
         if index:
             print("\nChanges to be committed:")
-            for status, path in index:
-                cache.write(f"{path}\n")
-                _print_path(i, status[0], path)
-                i += 1
+            index = [(s[0], p) for s, p in index]
+            i = _print_and_cache_status(index, i, cache)
 
         if tree:
             print("\nWorking tree:")
-            for status, path in tree:
-                cache.write(f"{path}\n")
-                _print_path(i, status[1], path)
-                i += 1
+            tree = [(s[1], p) for s, p in tree]
+            i = _print_and_cache_status(tree, i, cache)
 
         if untracked:
             print("\nUntracked:")
-            for status, path in untracked:
-                cache.write(f"{path}\n")
-                _print_path(i, status, path)
-                i += 1
+            i = _print_and_cache_status(untracked, i, cache)
 
         if conflicts:
             print("\nConflicts:")
-            for status, path in conflicts:
-                cache.write(f"{path}\n")
-                _print_path(i, status, path)
-                i += 1
+            i = _print_and_cache_status(untracked, i, cache)
             print(_MERGE_LEGEND)
 
 
@@ -118,7 +123,7 @@ def git_status():
     branch, paths = _call_git_status(unknown)
     separated = _separate_paths(paths)
     print(f"On branch {branch}")
-    _print_and_cache_status(*separated)
+    _print_and_cache_statuses(*separated)
     print()
 
 
