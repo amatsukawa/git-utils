@@ -72,6 +72,10 @@ U           U    unmerged, both modified
 def _print_and_cache_status(index, tree, conflicts, untracked):
     i = 1
 
+    if (not index and not tree and not conflicts and not untracked):
+        print("\nClean status.")
+        return
+
     with open(os.path.join(utils.CACHE_ROOT, "cache"), "w") as cache:
         cache.write("##status\n")
         if index:
