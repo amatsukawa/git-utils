@@ -23,9 +23,9 @@ I wrote this over a Saturday. There are no tests, only me testing it at my termi
 I expect it to have bugs. If it breaks your git repo, I take no responsibility.
 ```
 git clone https://github.com/amatsukawa/git-utils.git ~/.git-utils
-echo 'export PATH=$PATH:/Users/personal/src/git-util/bin' >> ~/.zshrc
-echo 'export GIT_UTILS_CACHE="${HOME}/.git_util"'
-echo 'export GIT_UTILS_ROOT="${HOME}/src/git-util"'
-echo 'source /Users/personal/src/git-util/aliases.sh"'
+echo 'export GIT_UTIL_ROOT="${HOME}/.git-util"'
+echo 'export PATH=$PATH:${GIT_UTIL_ROOT}/bin' >> ~/.zshrc
+echo 'export GIT_UTIL_CACHE="${HOME}/.git_util_cache"' >> ~/.zshrc
+echo 'source ${GIT_UTIL_ROOT}/aliases.sh"' >> ~/.zshrc
 ```
 
