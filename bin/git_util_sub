@@ -11,7 +11,7 @@ git_cmd=$1
 last_cmd=$2
 
 if [ "$cmd" == "## ${last_cmd}" ]; then
-  python "${GIT_UTILS_ROOT}/substitute.py" "${@:3}" | xargs git add
+  python "${GIT_UTILS_ROOT}/substitute.py" "${@:3}" | xargs git "$git_cmd"
 else
   echo "The expected last command to be ${last_cmd}, but was ${cmd:3}"
   exit 1
