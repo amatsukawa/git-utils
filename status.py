@@ -92,7 +92,7 @@ def _print_and_cache_statuses(index, tree, conflicts, untracked):
         return
 
     with open(utils.CACHE_PATH, "w") as cache:
-        cache.write("##status\n")
+        cache.write("## status\n")
         if index:
             print("\nChanges to be committed:")
             index = [(s[0], p) for s, p in index]

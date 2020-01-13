@@ -8,7 +8,6 @@ import utils
 def replace():
     with open(utils.CACHE_PATH, "r") as f:
         lines = [s.rstrip() for s in f.readlines()]
-        assert lines[0] == "##status", "The last command you ran was not status"
         lines = lines[1:]
         args = []
         for arg in sys.argv[1:]:
