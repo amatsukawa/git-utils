@@ -4,7 +4,7 @@ import shell
 
 
 def _get_cache_path():
-    root = os.environ.get("GIT_UTIL_CACHE", None)
+    root = os.environ.get("GIT_UTILS_CACHE", None)
     assert root, "No GIT_UTIL_CACHE environment variable."
     return os.path.join(root, "cache")
 

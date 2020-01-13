@@ -1,4 +1,4 @@
-# git-util
+# git-utils
 
 This is a reimplementation of a subset of functionality in [`scm_breeze`](https://github.com/scmbreeze/scm_breeze).
 
@@ -23,9 +23,9 @@ I wrote this over a Saturday. There are no tests, only me testing it at my termi
 I expect it to have bugs. If it breaks your git repo, I take no responsibility.
 ```
 git clone https://github.com/amatsukawa/git-utils.git ~/.git-utils
-echo 'export GIT_UTIL_ROOT="${HOME}/.git-util"'
-echo 'export PATH=$PATH:${GIT_UTIL_ROOT}/bin' >> ~/.zshrc
-echo 'export GIT_UTIL_CACHE="${HOME}/.git_util_cache"' >> ~/.zshrc
-echo 'source ${GIT_UTIL_ROOT}/aliases.sh"' >> ~/.zshrc
+echo 'export GIT_UTILS_ROOT="${HOME}/.git-utils"'
+echo 'export PATH=$PATH:${GIT_UTILS_ROOT}/bin' >> ~/.zshrc
+echo 'export GIT_UTILS_CACHE="${HOME}/.git_util_cache"' >> ~/.zshrc
+echo 'source ${GIT_UTILS_ROOT}/aliases.sh"' >> ~/.zshrc
 ```
 
