@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [[ -z $GIT_UTILS_CACHE ]]; then
+  echo 'Please set the $GIT_UTILS_CACHE env varable.'
+  exit 1
+fi
+
+cmd=$(head -n 1 $GIT_UTILS_CACHE/cache)
+
+git_cmd=$1
+last_cmd=$2
+
+if [ "$cmd" == "## ${last_cmd}" ]; then
+  python "${GIT_UTILS_ROOT}/substitute.py" "${@:3}" | xargs git add
+else
+  echo "The expected last command to be ${last_cmd}, but was ${cmd:3}"
+  exit 1
+fi
