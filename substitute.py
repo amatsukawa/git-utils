@@ -16,6 +16,8 @@ def replace():
                 assert 0 <= i - 1 < len(lines), f"No file numbered {i}"
                 args.append(lines[i - 1])
             except ValueError:
+                if arg.startswith("\\"):
+                    arg = arg[1:]
                 args.append(arg)
         print(" ".join(args))
 

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+python $GIT_UTILS_ROOT/branch.py
