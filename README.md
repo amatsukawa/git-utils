@@ -10,9 +10,7 @@ Of course I have no reason to be suspicious of `scm_breeze` repo owners specific
 Stuff like [this](https://www.theregister.co.uk/2018/11/26/npm_repo_bitcoin_stealer/) is not unheard of.
 
 Just as I'm uneasy about `scm_breeze`, unless you know me personally, I'd expect you to be uneasy about using
-this utility also. Instructions are more for me to copy paste when I sit down at a new setup.
-
-This implementation is much shorter than `scm_breeze` because it only has a subset of its functionality. There is also very limited bash, which is a langauge that breaks my brain. So you could read the ~250 of Python and >50 lines of bash and see what it's doing, if you were so inclined.
+this utility also. On the flip size, this implementation is much shorter than `scm_breeze` because it only has a subset of its functionality. There is also very limited bash, which is a langauge that breaks my brain. So you could read the ~250 of Python and >50 lines of bash and see what it's doing, if you were so inclined.
 
 If you want, feel free to use it. 
 I wrote this over a Saturday. There are no tests, only me trying it at my terminal.
