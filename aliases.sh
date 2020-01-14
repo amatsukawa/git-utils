@@ -18,4 +18,5 @@ alias grbi="git_util_sub rebase branch -i"
 alias grbc="git rebase --continue"
 alias grba="git rebase --abort"
 
-alias gl="log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+gl_format="--pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"
+alias gl="git log --graph ${gl_format} --abbrev-commit"

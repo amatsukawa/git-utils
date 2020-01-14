@@ -24,8 +24,10 @@ I expect it to have bugs. If it breaks your git repo, I take no responsibility.
 ```
 git clone https://github.com/amatsukawa/git-utils.git ~/.git-utils
 echo 'export GIT_UTILS_ROOT="${HOME}/.git-utils"' >> ~/.zshrc
-echo 'export GIT_UTILS_CACHE="${HOME}/.git_util_cache"' >> ~/.zshrc
+echo 'export GIT_UTILS_CACHE="${HOME}/.git_utils_cache"' >> ~/.zshrc
+echo 'export GIT_UTILS_PYTHON=python' >> ~/.zshrc
 echo 'export PATH=$PATH:${GIT_UTILS_ROOT}/bin' >> ~/.zshrc
 echo 'source ${GIT_UTILS_ROOT}/aliases.sh' >> ~/.zshrc
+
 ```
 
