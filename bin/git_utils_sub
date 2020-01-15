@@ -10,15 +10,10 @@ if [[ -z $GIT_UTILS_PYTHON ]]; then
   exit 1
 fi
 
-
-cmd=$(head -n 1 $GIT_UTILS_CACHE/cache)
-
 git_cmd=$1
 last_cmd=$2
-
-if [ "$cmd" == "## ${last_cmd}" ]; then
-  $GIT_UTILS_PYTHON "${GIT_UTILS_ROOT}/substitute.py" "${@:3}" | xargs git "$git_cmd"
+if [ $# -eq 2 ]; then
+  git "$git_cmd"
 else
-  echo "The expected last command to be ${last_cmd}, but was ${cmd:3}"
-  exit 1
+  $GIT_UTILS_PYTHON ${GIT_UTILS_ROOT}/substitute.py $last_cmd "${@:3}" | xargs git "$git_cmd"
 fi
