@@ -15,5 +15,7 @@ last_cmd=$2
 if [ $# -eq 2 ]; then
   git "$git_cmd"
 else
-  $GIT_UTILS_PYTHON ${GIT_UTILS_ROOT}/substitute.py $last_cmd "${@:3}" | xargs git "$git_cmd"
+  #$GIT_UTILS_PYTHON ${GIT_UTILS_ROOT}/substitute.py $last_cmd "${@:3}" | xargs git "$git_cmd"
+  args="$($GIT_UTILS_PYTHON ${GIT_UTILS_ROOT}/substitute.py $last_cmd ${@:3})"
+  git "$git_cmd" $args
 fi

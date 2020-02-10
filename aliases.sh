@@ -1,5 +1,6 @@
 alias gs="git_utils_status"
 alias gb="git_utils_branch"
+alias gbd="git_utils_sub branch branch -D"
 alias ga="git_utils_sub add status"
 alias gc="git_utils_sub commit status"
 alias gd="git_utils_sub diff status"

@@ -109,7 +109,7 @@ def _print_and_cache_statuses(index, tree, conflicts, untracked):
 
         if conflicts:
             print("\nConflicts:")
-            i = _print_and_cache_status(untracked, i, cache)
+            i = _print_and_cache_status(conflicts, i, cache)
             print(_MERGE_LEGEND)
 
 
